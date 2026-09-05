@@ -10,21 +10,12 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) throws IOException, CsvException {
-        List<Person> people = new ArrayList();
         BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\og5\\IdeaProjects\\CVS\\src\\records.txt"));
         String fileName = "C:\\Users\\og5\\IdeaProjects\\CVS\\src\\Logs_moodle.csv";
         try {
             CSVReader reader = new CSVReader(new FileReader(fileName));
             List<String[]> r = reader.readAll();
-
-
-            //skip the first record (r.get(0))
-            for (int i = 1; i < r.size(); i++) {
-                for (int j = 0; j < r.get(i).length; j++) {
-                    boolean add = people.add(new Person(r.get(i)[0], r.get(i)[1], r.get(i)[2], r.get(i)[3], r.get(i)[4], r.get(i)[5], r.get(i)[6]));
-                }
-            }
-
+            List<Person> people = PersonMapper.fromRows(r);
 
             for (int i = 0; i < people.size(); i++) {
                 writer.write(people.get(i).toString());
