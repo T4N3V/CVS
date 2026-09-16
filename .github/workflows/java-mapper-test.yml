@@ -1,0 +1,27 @@
+name: Java mapper test
+
+on:
+  push:
+    branches:
+      - main
+      - codex/**
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "11"
+      - name: Compile focused test
+        run: javac Person.java PersonMapper.java PersonMapperTest.java
+      - name: Run focused test
+        run: java PersonMapperTest
